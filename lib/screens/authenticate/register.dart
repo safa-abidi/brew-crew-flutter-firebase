@@ -1,20 +1,21 @@
 import 'package:brew_crew/services/auth.dart';
 import 'package:flutter/material.dart';
-class SignIn extends StatefulWidget {
 
+class Register extends StatefulWidget {
   final dynamic toggleView;
-  SignIn({ required this.toggleView });
+  Register({required this.toggleView});
 
   @override
-  _SignInState createState() => _SignInState();
+  _RegisterState createState() => _RegisterState();
 }
 
-class _SignInState extends State<SignIn> {
+class _RegisterState extends State<Register> {
   final AuthService _auth = AuthService();
+  final _formKey = GlobalKey<FormState>();
 
   //text field state
-  String email = '';
-  String password = '';
+  String email = "";
+  String password = "";
 
   @override
   Widget build(BuildContext context) {
@@ -23,14 +24,14 @@ class _SignInState extends State<SignIn> {
       appBar: AppBar(
         backgroundColor: Colors.brown[400],
         elevation: 0.0,
-        title: Text('Sign in to Brew Crew'),
+        title: Text('Register to Brew Crew'),
         actions: [
           TextButton.icon(
             onPressed: () {
               widget.toggleView();
             },
             icon: Icon(Icons.person),
-            label: Text('Register'),
+            label: Text('Sign in'),
             style: TextButton.styleFrom(
               primary: Colors.black,
             ),
@@ -40,10 +41,12 @@ class _SignInState extends State<SignIn> {
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
         child: Form(
+          key: _formKey, //for validation
           child: Column(
             children: [
               SizedBox(height: 20.0),
               TextFormField(
+                validator: (val) => val!.isEmpty ? 'enter an email' : null,
                 onChanged: (val) {
                   setState(() {
                     email = val;
@@ -52,6 +55,7 @@ class _SignInState extends State<SignIn> {
               ),
               SizedBox(height: 20.0),
               TextFormField(
+                validator: (val) => val!.length < 6 ? 'enter a password 6+ chars long' : null,
                 obscureText: true,
                 onChanged: (val) {
                   setState(() {
@@ -62,11 +66,13 @@ class _SignInState extends State<SignIn> {
               SizedBox(height: 20.0),
               ElevatedButton(
                 onPressed: () async {
-                  print(email);
-                  print(password);
+                  if (_formKey.currentState!.validate()) {
+                    print(email);
+                    print(password);
+                  }
                 },
                 child: Text(
-                  'Sign in',
+                  'Register',
                   style: TextStyle(
                     color: Colors.white,
                   ),
