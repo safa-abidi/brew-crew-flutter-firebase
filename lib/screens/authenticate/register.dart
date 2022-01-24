@@ -17,6 +17,9 @@ class _RegisterState extends State<Register> {
   String email = "";
   String password = "";
 
+  //for errors when registering
+  String error = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,7 +58,8 @@ class _RegisterState extends State<Register> {
               ),
               SizedBox(height: 20.0),
               TextFormField(
-                validator: (val) => val!.length < 6 ? 'enter a password 6+ chars long' : null,
+                validator: (val) =>
+                    val!.length < 6 ? 'enter a password 6+ chars long' : null,
                 obscureText: true,
                 onChanged: (val) {
                   setState(() {
@@ -67,8 +71,13 @@ class _RegisterState extends State<Register> {
               ElevatedButton(
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
-                    print(email);
-                    print(password);
+                    dynamic result = await _auth.regiterWithEmailAndPassword(
+                        email, password);
+                    if (result == null) {
+                      setState(() {
+                        error = 'please enter a valid email';
+                      });
+                    }
                   }
                 },
                 child: Text(
@@ -80,7 +89,15 @@ class _RegisterState extends State<Register> {
                 style: ElevatedButton.styleFrom(
                   primary: Colors.pink[400],
                 ),
-              )
+              ),
+              SizedBox(height: 12),
+              Text(
+                error,
+                style: TextStyle(
+                  color: Colors.red,
+                  fontSize: 14.0,
+                ),
+              ),
             ],
           ),
         ),
