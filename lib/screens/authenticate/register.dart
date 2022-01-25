@@ -1,4 +1,5 @@
 import 'package:brew_crew/services/auth.dart';
+import 'package:brew_crew/shared/constants.dart';
 import 'package:flutter/material.dart';
 
 class Register extends StatefulWidget {
@@ -49,6 +50,7 @@ class _RegisterState extends State<Register> {
             children: [
               SizedBox(height: 20.0),
               TextFormField(
+                decoration: textInputDecoration.copyWith(hintText : 'Email'),
                 validator: (val) => val!.isEmpty ? 'enter an email' : null,
                 onChanged: (val) {
                   setState(() {
@@ -58,6 +60,7 @@ class _RegisterState extends State<Register> {
               ),
               SizedBox(height: 20.0),
               TextFormField(
+                decoration: textInputDecoration.copyWith(hintText: 'Password'),
                 validator: (val) =>
                     val!.length < 6 ? 'enter a password 6+ chars long' : null,
                 obscureText: true,
@@ -71,7 +74,8 @@ class _RegisterState extends State<Register> {
               ElevatedButton(
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
-                    dynamic result = await _auth.regiterWithEmailAndPassword(email, password);
+                    dynamic result = await _auth.regiterWithEmailAndPassword(
+                        email, password);
                     if (result == null) {
                       setState(() {
                         error = 'please enter a valid email';
