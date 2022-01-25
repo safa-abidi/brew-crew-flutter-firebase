@@ -71,8 +71,7 @@ class _RegisterState extends State<Register> {
               ElevatedButton(
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
-                    dynamic result = await _auth.regiterWithEmailAndPassword(
-                        email, password);
+                    dynamic result = await _auth.regiterWithEmailAndPassword(email, password);
                     if (result == null) {
                       setState(() {
                         error = 'please enter a valid email';
