@@ -4,8 +4,8 @@ import 'package:brew_crew/shared/loading.dart';
 import 'package:flutter/material.dart';
 
 class SignIn extends StatefulWidget {
-  final dynamic toggleView;
-  SignIn({required this.toggleView});
+ final Function toggleView;
+const SignIn({Key? key, required this.toggleView}) : super(key: key);
 
   @override
   _SignInState createState() => _SignInState();

@@ -4,8 +4,8 @@ import 'package:brew_crew/shared/loading.dart';
 import 'package:flutter/material.dart';
 
 class Register extends StatefulWidget {
-  final dynamic toggleView;
-  Register({required this.toggleView});
+ final Function toggleView;
+const Register({Key? key, required this.toggleView}) : super(key: key);
 
   @override
   _RegisterState createState() => _RegisterState();
