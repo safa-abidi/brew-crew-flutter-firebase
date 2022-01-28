@@ -64,7 +64,8 @@ class _SettingsFormState extends State<SettingsForm> {
                   SizedBox(height: 20.0),
                   //slider
                   Slider(
-                      value: (_currentStrength ?? userData?.strength)!.toDouble(),
+                      value:
+                          (_currentStrength ?? userData!.strength)!.toDouble(),
                       min: 100,
                       max: 900,
                       divisions: 8,
@@ -83,9 +84,11 @@ class _SettingsFormState extends State<SettingsForm> {
                         ),
                       ),
                       onPressed: () async {
-                        print(_currentName);
-                        print(_currentSugars);
-                        print(_currentStrength);
+                        if (_formKey.currentState!.validate()) {
+                          await DatabaseService(uid: user.uid).updateUserData(
+                              _currentSugars!, _currentName, _currentStrength);
+                          Navigator.pop(context);
+                        }
                       }),
                 ],
               ),
